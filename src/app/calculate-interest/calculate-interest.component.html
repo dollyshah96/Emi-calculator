@@ -1,0 +1,46 @@
+
+<div class="m-4"> 
+  <div  class="col-6 col mb-5">
+    <div>
+      <span>LOAN AMOUNT (RS.)</span>
+      <mat-form-field class="example-full-width ml-5 float-right">
+        <input matInput placeholder="Enter Amount" 
+        [(ngModel)]="LoanAmount" >
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-slider class="example-margin col-12 " min="100000" max="10000000"  step="1000" [tickInterval]="10000" [(ngModel)]="LoanAmount"></mat-slider> <br>
+      <span>Min. 1Lac</span>
+      <span class="float-right">Max. 1Cr.</span>
+    </div>
+  </div>
+
+  <div class="col-6 col mb-5">
+    <div >
+      <span>TENURE (YEARS) </span>
+      <mat-form-field class="example-full-width ml-5 float-right">
+        <input matInput placeholder="Enter Year" >
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-slider class="example-margin col-12" min="1" max="30"  step="0.5"></mat-slider> <br>
+      <span>Min. 1</span>
+      <span class="float-right">Max. 30</span>
+    </div>
+  </div>
+
+  <div class="col-6 col mb-5">
+    <div>
+      <span>INTEREST RATE (% P.A.) </span>
+      <mat-form-field class="example-full-width ml-5 float-right">
+        <input matInput placeholder="Enter Rate" >
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-slider class="example-margin col-12" min="0" max="15" step="0.5"></mat-slider> <br>
+      <span>Min. 0</span>
+      <span class="float-right">Max. 15</span>
+    </div>
+  </div>
+
+</div>
