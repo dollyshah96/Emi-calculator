@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CalculateInterestComponent } from './calculate-interest.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
-import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const route: Routes = [
@@ -18,11 +17,11 @@ const route: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
-    // MatSliderModule,
     RouterModule.forChild(route),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
 })
 export class CalculateInterestModule { }

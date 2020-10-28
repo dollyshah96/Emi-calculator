@@ -1,46 +1,111 @@
+<div class="mb-5">
 
-<div class="m-4"> 
-  <div  class="col-6 col mb-5">
-    <div>
-      <span>LOAN AMOUNT (RS.)</span>
-      <mat-form-field class="example-full-width ml-5 float-right">
-        <input matInput placeholder="Enter Amount" 
-        [(ngModel)]="LoanAmount" >
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-slider class="example-margin col-12 " min="100000" max="10000000"  step="1000" [tickInterval]="10000" [(ngModel)]="LoanAmount"></mat-slider> <br>
-      <span>Min. 1Lac</span>
-      <span class="float-right">Max. 1Cr.</span>
-    </div>
-  </div>
+  <form class="m-4 d-flex" [formGroup]="calculateInterestForm">
+    <div class="col-6 col">
+      <div class="mb-5">
+        <span class="font-weight-bold heading">LOAN AMOUNT (RS.)</span>
+        <mat-form-field class="example-full-width ml-5 float-right">
+          <input matInput type="text" placeholder="Enter Amount" formControlName="loanAmount"
+            (keypress)="onlyNumbers($event)">
+        </mat-form-field>
 
-  <div class="col-6 col mb-5">
-    <div >
-      <span>TENURE (YEARS) </span>
-      <mat-form-field class="example-full-width ml-5 float-right">
-        <input matInput placeholder="Enter Year" >
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-slider class="example-margin col-12" min="1" max="30"  step="0.5"></mat-slider> <br>
-      <span>Min. 1</span>
-      <span class="float-right">Max. 30</span>
-    </div>
-  </div>
 
-  <div class="col-6 col mb-5">
-    <div>
-      <span>INTEREST RATE (% P.A.) </span>
-      <mat-form-field class="example-full-width ml-5 float-right">
-        <input matInput placeholder="Enter Rate" >
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-slider class="example-margin col-12" min="0" max="15" step="0.5"></mat-slider> <br>
-      <span>Min. 0</span>
-      <span class="float-right">Max. 15</span>
-    </div>
-  </div>
+        <div class="color-red" *ngIf=" calculateInterestForm.get('loanAmount').hasError('required')">Loan Amount is
+          required!</div>
 
+        <div class="color-red" *ngIf="calculateInterestForm.get('loanAmount').hasError('min') ||
+                  calculateInterestForm.get('loanAmount').hasError('max')
+                  ">
+          Please enter valid amount!
+        </div>
+
+
+
+        <mat-slider class="example-margin col-12 " min="100000" max="10000000" step="10000" [tickInterval]="10000"
+          [value]="calculateInterestForm.controls.loanAmount.value" (change)="sliderChange($event, 'loan')">
+        </mat-slider> <br>
+        <span class="font-italic">Min. 1Lac</span>
+        <span class="float-right font-italic">Max. 1Cr.</span>
+      </div>
+
+      <div class="mb-5">
+        <span class="font-weight-bold heading">TENURE (YEARS) </span>
+        <mat-form-field class="example-full-width ml-5 float-right">
+          <input matInput type="text" min="1" max="30" placeholder="Enter Year" (keypress)="onlyNumbers($event)"
+            formControlName="tenure">
+        </mat-form-field>
+
+        <div class="color-red" *ngIf="calculateInterestForm.get('tenure').hasError('min') ||
+                  calculateInterestForm.get('tenure').hasError('max')
+                  ">
+          Please enter valid tenure!
+        </div>
+
+        <div class="color-red" *ngIf=" calculateInterestForm.get('tenure').hasError('required')">Tenure is required!
+        </div>
+
+
+        <mat-slider class="example-margin col-12" min="1" max="30" step="1"
+          [value]="calculateInterestForm.controls.tenure.value" (change)="sliderChange($event, 'tenure')"
+          tickInterval="1000">
+        </mat-slider> <br>
+        <span class="font-italic">Min. 1</span>
+        <span class="float-right font-italic">Max. 30</span>
+      </div>
+
+      <div class="mb-5">
+        <div>
+          <span class="font-weight-bold heading">INTEREST RATE (% P.A.) </span>
+          <mat-form-field class="example-full-width ml-5 float-right">
+            <input matInput type="text" placeholder="Enter Rate" formControlName="rateOfInterest" min="0" max="15">
+          </mat-form-field>
+
+          <div class="color-red" *ngIf="calculateInterestForm.get('rateOfInterest').hasError('min') ||
+                            calculateInterestForm.get('rateOfInterest').hasError('max')
+                            ">
+            Please enter valid Interest!
+          </div>
+
+          <div class="color-red" *ngIf=" calculateInterestForm.get('rateOfInterest').hasError('required')">Rate of
+            Interest
+            is required!</div>
+
+        </div>
+        <mat-slider class="example-margin col-12" min="0" max="15" step="0.1"
+          [value]="calculateInterestForm.controls.rateOfInterest.value" (change)="sliderChange($event, 'interest')">
+        </mat-slider> <br>
+        <span class="font-italic">Min. 0</span>
+        <span class="float-right font-italic">Max. 15</span>
+      </div>
+    </div>
+    <div>
+      <div class="mb-5">
+        <p class="d-inline-flex font-weight-bold heading">PRINCIPAL AMOUNT (RS.) -
+        </p>
+        <span class="color-red f-18">
+          {{calculatedInfo.principalAmount | currency: 'INR'}}
+        </span>
+      </div>
+      <div class="mb-5">
+        <p class="d-inline-flex font-weight-bold heading">INTEREST AMOUNT (RS.) - </p>
+        <span class="color-red f-18">
+          {{calculatedInfo.interestAmount | currency: 'INR'}}
+        </span>
+      </div>
+      <div class="mb-5">
+        <p class="d-inline-flex font-weight-bold heading">TOTAL AMOUNT (RS.) -</p>
+        <span class="color-red f-18">
+          {{calculatedInfo.totalAmount | currency: 'INR'}}
+        </span>
+      </div>
+
+      <div class="mb-5">
+        <p class="d-inline-flex font-weight-bold heading">LOAN EMI -</p>
+        <span class="color-red f-18">
+          {{calculatedInfo.EMI | currency: 'INR'}}
+        </span>
+      </div>
+
+    </div>
+  </form>
 </div>
