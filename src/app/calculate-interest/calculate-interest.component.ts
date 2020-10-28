@@ -27,7 +27,8 @@ export class CalculateInterestComponent implements OnInit {
     rateOfInterest: new FormControl(6, [
       Validators.max(15),
       Validators.min(0),
-      Validators.required
+      Validators.required,
+      Validators.pattern('(\\d+)(\\.)?(\\d+)?')
     ])
   });
 
@@ -61,14 +62,6 @@ export class CalculateInterestComponent implements OnInit {
       && this.calculateInterestForm.get('rateOfInterest').valid
 
     if (isFormValid) {
-      //A = P(1+rt) where r = R/100;
-
-      const r = this.calculateInterestForm.controls.rateOfInterest.value / 100;
-      const totalAmount = this.calculateInterestForm.controls.loanAmount.value * (1 + r * this.calculateInterestForm.controls.tenure.value);
-      const interest = totalAmount - this.calculateInterestForm.controls.loanAmount.value;
-      this.calculatedInfo.interestAmount = interest;
-      this.calculatedInfo.totalAmount = totalAmount;
-      this.calculatedInfo.principalAmount = this.calculateInterestForm.controls.loanAmount.value;
       this.calculateEMI();
     }
 
@@ -77,7 +70,7 @@ export class CalculateInterestComponent implements OnInit {
 
   private calculateEMI() {
     //EMI = (P*r* [(1+r)^n) / ((1+r)^n - 1)]) where r=r/12*100;
-
+    this.calculatedInfo.principalAmount = this.calculateInterestForm.controls.loanAmount.value;
     const tenureInMonths = this.calculateInterestForm.controls.tenure.value * 12;
     const rateOfInterestPerYear = this.calculateInterestForm.controls.rateOfInterest.value / (12 * 100);
     const P = this.calculateInterestForm.controls.loanAmount.value;
@@ -85,6 +78,12 @@ export class CalculateInterestComponent implements OnInit {
       (Math.pow((1 + rateOfInterestPerYear), tenureInMonths) - 1);
 
     this.calculatedInfo.EMI = Math.round(EMI);
+
+
+    this.calculatedInfo.interestAmount = (this.calculatedInfo.EMI * tenureInMonths) - this.calculateInterestForm.controls.loanAmount.value;
+
+    this.calculatedInfo.totalAmount = this.calculateInterestForm.controls.loanAmount.value + this.calculatedInfo.interestAmount;
+
   }
 
   public detectFormChanges() {

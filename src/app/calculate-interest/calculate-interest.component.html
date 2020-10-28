@@ -16,7 +16,7 @@
         <div class="color-red" *ngIf="calculateInterestForm.get('loanAmount').hasError('min') ||
                   calculateInterestForm.get('loanAmount').hasError('max')
                   ">
-          Please enter valid amount!
+          Please enter amount between 1Lac. to 1Cr.!
         </div>
 
 
@@ -31,14 +31,14 @@
       <div class="mb-5">
         <span class="font-weight-bold heading">TENURE (YEARS) </span>
         <mat-form-field class="example-full-width ml-5 float-right">
-          <input matInput type="text" min="1" max="30" placeholder="Enter Year" (keypress)="onlyNumbers($event)"
+          <input matInput type="text" min="1" max="30" placeholder="Enter Tenure" (keypress)="onlyNumbers($event)"
             formControlName="tenure">
         </mat-form-field>
 
         <div class="color-red" *ngIf="calculateInterestForm.get('tenure').hasError('min') ||
                   calculateInterestForm.get('tenure').hasError('max')
                   ">
-          Please enter valid tenure!
+          Please enter tenure between 1 to 30!
         </div>
 
         <div class="color-red" *ngIf=" calculateInterestForm.get('tenure').hasError('required')">Tenure is required!
@@ -63,12 +63,15 @@
           <div class="color-red" *ngIf="calculateInterestForm.get('rateOfInterest').hasError('min') ||
                             calculateInterestForm.get('rateOfInterest').hasError('max')
                             ">
-            Please enter valid Interest!
+            Please enter number between 0 to 15!
           </div>
 
           <div class="color-red" *ngIf=" calculateInterestForm.get('rateOfInterest').hasError('required')">Rate of
             Interest
             is required!</div>
+
+          <div class="color-red" *ngIf="calculateInterestForm.get('rateOfInterest').hasError('pattern')">
+            Please enter valid number!</div>
 
         </div>
         <mat-slider class="example-margin col-12" min="0" max="15" step="0.1"
