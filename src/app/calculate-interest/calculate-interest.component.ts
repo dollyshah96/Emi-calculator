@@ -82,7 +82,7 @@ export class CalculateInterestComponent implements OnInit {
 
     this.calculatedInfo.interestAmount = (this.calculatedInfo.EMI * tenureInMonths) - this.calculateInterestForm.controls.loanAmount.value;
 
-    this.calculatedInfo.totalAmount = this.calculateInterestForm.controls.loanAmount.value + this.calculatedInfo.interestAmount;
+    this.calculatedInfo.totalAmount = this.calculatedInfo.principalAmount + this.calculatedInfo.interestAmount;
 
   }
 

@@ -8,5 +8,6 @@ export class ICalculateInterest {
         this.interestAmount = 0;
         this.totalAmount = 0;
         this.principalAmount = 0;
+        this.EMI = 0;
     }
 }

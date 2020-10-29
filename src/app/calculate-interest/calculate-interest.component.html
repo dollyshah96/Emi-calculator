@@ -5,7 +5,7 @@
       <div class="mb-5">
         <span class="font-weight-bold heading">LOAN AMOUNT (RS.)</span>
         <mat-form-field class="example-full-width ml-5 float-right">
-          <input matInput type="text" placeholder="Enter Amount" formControlName="loanAmount"
+          <input matInput type="number" placeholder="Enter Amount" formControlName="loanAmount"
             (keypress)="onlyNumbers($event)">
         </mat-form-field>
 
@@ -99,6 +99,7 @@
         <p class="d-inline-flex font-weight-bold heading">TOTAL AMOUNT (RS.) -</p>
         <span class="color-red f-18">
           {{calculatedInfo.totalAmount | currency: 'INR'}}
+
         </span>
       </div>
 
